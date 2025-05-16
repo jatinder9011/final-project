@@ -28,7 +28,26 @@ pipeline {
                 timeout(time: 5, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
+}
+}
+                stage('Build Docker Image') {
+            steps {
+                script {
+                    dockerImage = docker.build("html-webapp:secure")
+                }
             }
         }
-    }
-}
+
+        stage('Scan with Trivy') {
+            steps {
+                script {
+                    def result = sh(script: "trivy image --severity HIGH,CRITICAL --exit-code 1 html-webapp:secure", returnStatus: true)
+                    if (result != 0) {
+                        error "Trivy scan failed due to HIGH or CRITICAL vulnerabilities"
+                    }
+                }
+            }
+        }
+      }
+            
+ 
