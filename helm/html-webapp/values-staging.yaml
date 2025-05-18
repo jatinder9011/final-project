@@ -1,0 +1,21 @@
+replicaCount: 2
+
+image:
+  repository: html-webapp
+  tag: staging
+  pullPolicy: IfNotPresent
+
+serviceAccount:
+  create: true
+  name: html-webapp
+
+service:
+  type: ClusterIP
+  port: 80
+
+env:
+  name: staging
+
+secrets:
+  username: myuser
+  password: mypass 

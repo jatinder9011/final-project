@@ -48,6 +48,24 @@ pipeline {
                 }
             }
         }
+    }
+    // End of stages
+
+    post {
+        failure {
+            script {
+                def slackWebhook = 'https://hooks.slack.com/services/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'
+                def message = """{
+                  "text": "❌ Jenkins build *failed* for job: ${env.JOB_NAME} build #${env.BUILD_NUMBER}. Check: ${env.BUILD_URL}"
+                }"""
+                sh """
+                    curl -X POST -H 'Content-type: application/json' \
+                    --data '${message}' ${slackWebhook}
+                """
+            }
+        }
+    }
+}
      }
   }
             

@@ -1,0 +1,21 @@
+replicaCount: 3
+
+image:
+  repository: html-webapp
+  tag: prod
+  pullPolicy: IfNotPresent
+
+serviceAccount:
+  create: true
+  name: html-webapp
+
+service:
+  type: ClusterIP
+  port: 80
+
+env:
+  name: production
+
+secrets:
+  username: myuser
+  password: mypass

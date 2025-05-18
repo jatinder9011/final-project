@@ -1,0 +1,8 @@
+prometheus:
+  prometheusSpec:
+    ruleSelector:
+      matchLabels:
+        release: prom
+        role: alert-rules
+grafana:
+  enabled: true

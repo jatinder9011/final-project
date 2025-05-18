@@ -1,0 +1,21 @@
+replicaCount: 1
+
+image:
+  repository: html-webapp
+  tag: secure
+  pullPolicy: Never
+
+serviceAccount:
+  create: true
+  name: html-webapp
+
+service:
+  type: ClusterIP
+  port: 80
+
+env:
+  name: development
+
+secrets:
+  username: myuser
+  password: mypass

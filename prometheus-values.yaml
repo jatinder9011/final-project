@@ -1,0 +1,21 @@
+prometheus:
+  prometheusSpec:
+    ruleSelector:
+      matchLabels:
+        release: prom
+        role: alert-rules
+prometheusOperator:
+  admissionWebhooks:
+    enabled: true
+  namespaces:
+    additional:
+      - monitoring-dev
+grafana:
+  enabled: true
+prometheus-node-exporter:
+  enabled: false
+prometheus-node-exporter:
+  enabled: false
+prometheusOperator:
+  admissionWebhooks:
+    enabled: false
