@@ -121,3 +121,24 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+bad_indentation:
+    - key: value
+  wrong_indent: trusdncaklndckladncklndwqklcnadlkcn
+  anmlcladnmc
+  ack
+  adlc';adkc
+  'adkvc
+  ;advlmad;Vm,ad
+  vclad
+  cv
+  adkv
+  ;wdv
+  ;kwd
+  ;vkda
+  ;vk
+  w;dkv
+  wdv
+  dk
+  vkadd'
+  ckdw;
+  vcwdqe
