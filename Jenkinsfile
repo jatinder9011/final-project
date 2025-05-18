@@ -19,7 +19,7 @@ pipeline {
     post {
         failure {
             script {
-                def slackWebhook = 'https://hooks.slack.com/services/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' // 🔁 Replace with real one
+                def slackWebhook = 'https://hooks.slack.com/services/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'
                 def message = """{i
                   "text": "❌ Jenkins build *failed* for job: ${env.JOB_NAME} build #${env.BUILD_NUMBER}. Check: ${env.BUILD_URL}"
                 }"""
