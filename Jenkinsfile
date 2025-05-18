@@ -18,10 +18,9 @@ pipeline {
 
     post {
         failure {
-            script {
-                def slackWebhook = 'https://hooks.slack.com/services/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'
-                def message = """{i
-                  "text": "❌ Jenkins build *failed* for job: ${env.JOB_NAME} build #${env.BUILD_NUMBER}. Check: ${env.BUILD_URL}"
+          withCredentials([string(credentialsId: 'SLACK_WEBHOOK', variable: 'SLACK_URL')]) {
+            def message = """{i
+              "text": "❌ Jenkins build *failed* for job: ${env.JOB_NAME} build #${env.BUILD_NUMBER}. Check: ${env.BUILD_URL}"
                 }"""
                 sh """
                     curl -X POST -H 'Content-type: application/json' \
@@ -29,5 +28,4 @@ pipeline {
                 """
             }
         }
-    }
 }
