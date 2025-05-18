@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        SONARQUBE_SERVER = 'SonarQube-Server'
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -12,50 +8,19 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
+        stage('Failing Stage') {
             steps {
-                withSonarQubeEnv("${SONARQUBE_SERVER}") {
-                    script {
-                        def scannerHome = tool 'SonarScanner'
-                        sh "${scannerHome}/bin/sonar-scanner"
-                    }
-                }
-            }
-        }
-
-      //  stage('Quality Gate') {
-      //    steps {
-      //          timeout(time: 5, unit: 'MINUTES') {
-      //              waitForQualityGate abortPipeline: true
-      //          }
-       //     }
-      //  }
-                stage('Build Docker Image') {
-            steps {
-                script {
-                    dockerImage = docker.build("html-webapp:secure")
-                }
-            }
-        }
-
-        stage('Scan with Trivy') {
-            steps {
-                script {
-                    def result = sh(script: "trivy image --severity HIGH,CRITICAL --exit-code 1 html-webapp:secure", returnStatus: true)
-                    if (result != 0) {
-                        error "Trivy scan failed due to HIGH or CRITICAL vulnerabilities"
-                    }
-                }
+                // Force a failure to test Slack notification
+                sh 'exit 1'
             }
         }
     }
-    // End of stages
 
     post {
         failure {
             script {
-                def slackWebhook = 'https://hooks.slack.com/services/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'
-                def message = """{
+                def slackWebhook = 'https://hooks.slack.com/services/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' // 🔁 Replace with real one
+                def message = """{i
                   "text": "❌ Jenkins build *failed* for job: ${env.JOB_NAME} build #${env.BUILD_NUMBER}. Check: ${env.BUILD_URL}"
                 }"""
                 sh """
@@ -65,4 +30,4 @@ pipeline {
             }
         }
     }
-} 
+}
